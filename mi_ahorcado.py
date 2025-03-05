@@ -1,5 +1,5 @@
 from random import choices, choice
-from palabras import *
+from ahorcado_palabras import *
 from ahorcado_diagramas import vidas_diccionario_visual
 
 def seleccionar_palabra(palabras_faciles, palabras_intermedias, palabras_dificiles):
