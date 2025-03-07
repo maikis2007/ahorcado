@@ -43,6 +43,7 @@ def estado(vidas, letras_incorrectas, letras_correctas, palabra, final=False):
     Muestra el estado actual del juego, incluyendo las vidas, letras incorrectas, diagrama del ahorcado y la palabra
     oculta.
     """
+
     if vidas > 0:
         hearts = "  ".join("❤️" for _ in range(vidas))
         if letras_incorrectas:
@@ -55,6 +56,8 @@ def estado(vidas, letras_incorrectas, letras_correctas, palabra, final=False):
     msg = f"\nVidas: {vidas} {hearts}"
 
     if letras_incorrectas:
+        letras_incorrectas = sorted(letras_incorrectas)
+
         if len(letras_incorrectas) == 1:
             msg += f"{sep}(Letra incorrecta: {letras_incorrectas[0]})"
         else:
@@ -104,7 +107,7 @@ def validar_letra(letra, letras_correctas, letras_incorrectas, palabra):
         else:
             print("\n⚠️  Has ingresado algo inválido.")
         return False
-    elif letra in (letras_correctas | set(letras_incorrectas)):
+    elif letra in (letras_correctas | letras_incorrectas):
         print("\n🔄 Ya has ingresado esa letra.")
         return False
     elif letra in palabra:
@@ -112,7 +115,7 @@ def validar_letra(letra, letras_correctas, letras_incorrectas, palabra):
         print(f"\n✅ ¡Correcto! '{letra}' está en la palabra.")
         return True
     else:
-        letras_incorrectas.append(letra)
+        letras_incorrectas.add(letra)
         print(f"\n❌ ¡Incorrecto! '{letra}' no está en la palabra.")
         return False
 
@@ -121,7 +124,7 @@ def jugar():
     palabra = seleccionar_palabra(palabras_faciles, palabras_intermedias, palabras_dificiles)
     vidas = 7
     letras_correctas = set()
-    letras_incorrectas = []
+    letras_incorrectas = set()
 
     encabezado()
     info_extra(palabra)
